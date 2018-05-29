@@ -13,7 +13,6 @@ public class Aircraft {
     protected Aircraft(String name, Coordinates coordinates){
         this.coordinates = coordinates;
         this.name = name;
-//        this.id = idCounter++;
         this.id = this.incrementIdCounter();
     }
 
