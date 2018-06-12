@@ -25,6 +25,10 @@ public class Tower {
             if (j > observers.size())
                 i--;
         }
-
     }
+
+    public int getObserversSize() {
+        return this.observers.size();
+    }
+
 }

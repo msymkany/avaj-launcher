@@ -4,6 +4,9 @@ import java.io.*;
 import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by msymkany on 5/26/18.
  */
@@ -29,7 +32,38 @@ public class Simulator {
                 throw (new NewException("Empty file"));
             }
 
+            printWriter = null;
+            File file = new File("simulation.txt");
+            printWriter = new PrintWriter(file);
 
+
+            while ((line = reader.readLine()) != null) {
+
+                String regExp = "(Baloon|JetPlane|Helicopter) (\\w+) (\\d+) (\\d+) (\\d+)";
+                Pattern pattern = Pattern.compile(regExp);
+                Matcher matcher = pattern.matcher(line);
+                if (matcher.matches()) {
+                    if (Integer.parseInt(matcher.group(5)) > 0) {
+                        Flyable flyable = AircraftFactory.newAircraft(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)),
+                                Integer.parseInt(matcher.group(4)), Integer.parseInt(matcher.group(5)));
+                        if (flyable != null)
+                            flyable.registerTower(weatherTower);
+                    }
+                    else throw new IOException("Wrong format of Aircraft description:\n\"" + line + "\"");
+//                String[] splitLine = line.split(" ");
+////                Validator.validateLine(splitLine);
+//                Flyable flyable = AircraftFactory.newAircraft(splitLine[0],
+//                        splitLine[1],
+//                        Integer.parseInt(splitLine[2]),
+//                        Integer.parseInt(splitLine[3]),
+//                        Integer.parseInt(splitLine[4]));
+//
+                }
+                for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
+                    weatherTower.changeWeather();
+                }
+
+            }
         }
         catch (FileNotFoundException e){
             System.out.println(e.getMessage());
@@ -39,6 +73,9 @@ public class Simulator {
         }
         catch (NewException e){
             System.out.println(e.getMessage());
+        }
+        catch (FileNotFoundException e){
+                    System.out.println(e.getMessage());
         }
 
 
