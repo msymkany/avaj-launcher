@@ -1,7 +1,6 @@
 package ua.unit.aircraft;
 
 import java.io.*;
-import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -43,21 +42,17 @@ public class Simulator {
                 Pattern pattern = Pattern.compile(regExp);
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
+                    AircraftFactory factory = new AircraftFactory();
                     if (Integer.parseInt(matcher.group(5)) > 0) {
-                        Flyable flyable = AircraftFactory.newAircraft(matcher.group(1), matcher.group(2), Integer.parseInt(matcher.group(3)),
-                                Integer.parseInt(matcher.group(4)), Integer.parseInt(matcher.group(5)));
+                        Flyable flyable = factory.newAircraft(matcher.group(1),
+                                matcher.group(2),
+                                Integer.parseInt(matcher.group(3)),
+                                Integer.parseInt(matcher.group(4)),
+                                Integer.parseInt(matcher.group(5)));
                         if (flyable != null)
                             flyable.registerTower(weatherTower);
                     }
                     else throw new IOException("Wrong format of Aircraft description:\n\"" + line + "\"");
-//                String[] splitLine = line.split(" ");
-////                Validator.validateLine(splitLine);
-//                Flyable flyable = AircraftFactory.newAircraft(splitLine[0],
-//                        splitLine[1],
-//                        Integer.parseInt(splitLine[2]),
-//                        Integer.parseInt(splitLine[3]),
-//                        Integer.parseInt(splitLine[4]));
-//
                 }
                 for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
                     weatherTower.changeWeather();
@@ -65,20 +60,8 @@ public class Simulator {
 
             }
         }
-        catch (FileNotFoundException e){
+        catch (IOException | NewException  e){
             System.out.println(e.getMessage());
         }
-        catch (IOException e){
-            System.out.println(e.getMessage());
-        }
-        catch (NewException e){
-            System.out.println(e.getMessage());
-        }
-        catch (FileNotFoundException e){
-                    System.out.println(e.getMessage());
-        }
-
-
-
     }
 }

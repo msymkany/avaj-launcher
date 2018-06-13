@@ -11,19 +11,26 @@ public class Tower {
     private List<Flyable> observers = new LinkedList<Flyable>();
 
     public void register(Flyable flyable){
-        observers.add(flyable);
+        if (!this.observers.contains(flyable)){
+            observers.add(flyable);
+        }
     }
 
     public void unregister(Flyable flyable){
-        observers.remove(flyable);
+        if (this.observers.contains(flyable)){
+            observers.remove(flyable);
+        }
+
     }
 
     protected void conditionsChanged(){
-        int j;
-        for (int i = 0; i < (j = observers.size()); i++){
+        int size = observers.size();
+        for (int i = 0; i <  observers.size(); i++){
             observers.get(i).updateConditions();
-            if (j > observers.size())
+            if (size > observers.size()){
                 i--;
+                size--;
+            }
         }
     }
 
