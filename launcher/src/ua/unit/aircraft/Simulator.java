@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 
 public class Simulator {
 
-	private static WeatherTower weatherTower;
-    private static List<Flyable> flyables = new LinkedList<Flyable>();
+	private static WeatherTower weatherTower = new WeatherTower();
+//    private static List<Flyable> flyables = new LinkedList<Flyable>();
     static PrintWriter printWriter;
 
     public static void main(String[] args){
@@ -34,7 +34,7 @@ public class Simulator {
             printWriter = null;
             File file = new File("simulation.txt");
             printWriter = new PrintWriter(file);
-
+            AircraftFactory factory = new AircraftFactory();
 
             while ((line = reader.readLine()) != null) {
 
@@ -42,7 +42,6 @@ public class Simulator {
                 Pattern pattern = Pattern.compile(regExp);
                 Matcher matcher = pattern.matcher(line);
                 if (matcher.matches()) {
-                    AircraftFactory factory = new AircraftFactory();
                     if (Integer.parseInt(matcher.group(5)) > 0) {
                         Flyable flyable = factory.newAircraft(matcher.group(1),
                                 matcher.group(2),
@@ -54,10 +53,9 @@ public class Simulator {
                     }
                     else throw new IOException("Wrong format of Aircraft description:\n\"" + line + "\"");
                 }
-                for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
-                    weatherTower.changeWeather();
-                }
-
+            }
+            for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
+                weatherTower.changeWeather();
             }
         }
         catch (IOException | NewException  e){
