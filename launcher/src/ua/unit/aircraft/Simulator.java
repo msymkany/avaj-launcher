@@ -61,5 +61,7 @@ public class Simulator {
         catch (IOException | NewException  e){
             System.out.println(e.getMessage());
         }
+        if ( printWriter != null )
+            printWriter.close();
     }
 }
