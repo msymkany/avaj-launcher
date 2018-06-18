@@ -30,13 +30,13 @@ public class JetPlane extends Aircraft implements Flyable{
             case "RAIN": {
                 coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude() + 5,
                         height);
-                Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): THe rain falls down.");
+                Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): The rain falls down.");
                 break;
             }
             case "FOG": {
                 coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude() + 1,
                         height);
-                Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): Oh, Fog it!.");
+                Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): Tuman yarom, tuman dolynoyu.");
                 break;
             }
             case "SNOW": {
@@ -46,7 +46,7 @@ public class JetPlane extends Aircraft implements Flyable{
                     Simulator.printWriter.println("Tower says: JetPlane#" + this.name + "(" + this.id + ") unregistered from weather tower");
                 }
                 else {
-                    Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): Don't eat the yellow snow.");
+                    Simulator.printWriter.println("JetPlane#" + this.name + "(" + this.id + "): Let it snow, let it snow, let it snow.");
                     coordinates = new Coordinates(coordinates.getLongitude(), coordinates.getLatitude(),
                             height - 7);
                 }

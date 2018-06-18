@@ -31,7 +31,7 @@ public class Simulator {
                 throw (new NewException("Empty file"));
             }
 
-            printWriter = null;
+//            printWriter = null;
             File file = new File("simulation.txt");
             printWriter = new PrintWriter(file);
             AircraftFactory factory = new AircraftFactory();
@@ -57,6 +57,8 @@ public class Simulator {
             for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
                 weatherTower.changeWeather();
             }
+            if ( printWriter != null )
+                printWriter.close();
         }
         catch (IOException | NewException  e){
             System.out.println(e.getMessage());
