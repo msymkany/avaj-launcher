@@ -1,6 +1,7 @@
 package ua.unit.aircraft;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.regex.Matcher;
@@ -13,7 +14,6 @@ import java.util.regex.Pattern;
 public class Simulator {
 
 	private static WeatherTower weatherTower = new WeatherTower();
-//    private static List<Flyable> flyables = new LinkedList<Flyable>();
     static PrintWriter printWriter;
 
     public static void main(String[] args){
@@ -31,7 +31,7 @@ public class Simulator {
                 throw (new NewException("Empty file"));
             }
 
-//            printWriter = null;
+            printWriter = null;
             File file = new File("simulation.txt");
             printWriter = new PrintWriter(file);
             AircraftFactory factory = new AircraftFactory();
@@ -60,7 +60,16 @@ public class Simulator {
             if ( printWriter != null )
                 printWriter.close();
         }
-        catch (IOException | NewException  e){
+//        catch (IOException | NewException | ArrayIndexOutOfBoundsException e){
+//            System.out.println(e.getMessage());
+//        }
+        catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("Please input file with instructions as an argument");
+        }
+        catch (NumberFormatException e){
+            System.out.println("First string in instruction must be valid number of simulations: positive int");
+        }
+        catch (Exception e){
             System.out.println(e.getMessage());
         }
         if ( printWriter != null )
