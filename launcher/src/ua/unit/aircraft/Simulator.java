@@ -51,8 +51,9 @@ public class Simulator {
                         if (flyable != null)
                             flyable.registerTower(weatherTower);
                     }
-                    else throw new IOException("Wrong format of Aircraft description:\n\"" + line + "\"");
+                    else throw new IOException("Wrong format of Aircraft height:\n\"" + line + "\"");
                 }
+                else throw new IOException("Wrong format of Aircraft description:\n\"" + line + "\"");
             }
             for (int i = 0; i < simulationsNum && weatherTower.getObserversSize() != 0; ++i) {
                 weatherTower.changeWeather();
@@ -60,9 +61,6 @@ public class Simulator {
             if ( printWriter != null )
                 printWriter.close();
         }
-//        catch (IOException | NewException | ArrayIndexOutOfBoundsException e){
-//            System.out.println(e.getMessage());
-//        }
         catch (ArrayIndexOutOfBoundsException e){
             System.out.println("Please input file with instructions as an argument");
         }
@@ -72,7 +70,5 @@ public class Simulator {
         catch (Exception e){
             System.out.println(e.getMessage());
         }
-        if ( printWriter != null )
-            printWriter.close();
     }
 }
